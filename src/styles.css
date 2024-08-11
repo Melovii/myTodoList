@@ -1,0 +1,162 @@
+html {
+    position: relative;
+    /*min-height: 100%;*/
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+:root {
+    --bg-color: #191b1c;
+    --primary-color: #1E1E1E;
+    --secondary-color: #30B0C7;
+    --tertiary-color: #2B2B2B;
+    --border-color: #2E2E2E;
+    --font-family: Arial, sans-serif;
+    --font-size-base: 16px;
+    --text-color: #cbcbcb;
+    --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    /*  add a ask color: #909090  */
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+/* content */
+
+#container {
+    display: grid;
+    grid-template-columns: 2fr 4fr 4fr;
+    gap: 10px;
+    padding: 10px;
+}
+
+.logo {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.section {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    height: calc(100vh - 20px);
+    margin: 0;
+}
+
+/* sidebar */
+
+nav {
+    gap: 25px;
+}
+
+.sidebar-option {
+    display: flex;
+    margin: 0 20px 0 20px;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.sidebar-left {
+    display: flex;
+    gap: 10px;
+}
+
+.divider {
+    height: 3px;
+    width: 85%;
+    border-radius: 3px;
+    background-color: var(--border-color);
+    margin: 0 20px;
+}
+
+.projects {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -10px 20px 0 20px;
+}
+
+.projects > .header {
+    font-weight: 600;
+}
+
+.plus-icon {
+    font-size: 32px;
+    cursor: pointer;
+}
+
+
+/* list */
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-task {
+    background-color: var(--tertiary-color);
+    color: var(--text-color);
+    padding: 10px;
+    width: 80%;
+    height: 35px;
+    margin-top: 20px;
+    border-radius: 3px;
+    border: none;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.new-task:focus {
+    outline: var(--secondary-color) solid 1px;
+}
+
+
+/* todo */
+
+.todo {
+}
+
+
+/*!* Footer *!*/
+
+/*footer {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    gap: 16px;*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    padding: 16px;*/
+/*    font-size: 24px;*/
+/*    bottom: -52px;*/
+/*    left: 0;*/
+/*}*/
+
+/*footer a {*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*}*/
+
+/*.github {*/
+/*    height: 32px;*/
+/*    width: auto;*/
+/*    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);*/
+/*    color: var(--text-color);*/
+/*}*/
+
+/*.github:hover {*/
+/*    transform: scale(1.5);*/
+/*}*/

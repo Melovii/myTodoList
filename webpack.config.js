@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'index.js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
     mode: 'development',
@@ -18,7 +18,7 @@ module.exports = {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
             },
-            // uncomment if you're going to use custom font
+            // Uncomment if you're going to use custom fonts
             // {
             //     test: /\.(woff|woff2|eot|ttf|otf)$/i,
             //     type: 'asset/resource',
@@ -30,5 +30,5 @@ module.exports = {
             template: './src/index.html',
             favicon: './src/assets/icons/tick.svg',
         }),
-    ]
+    ],
 };
