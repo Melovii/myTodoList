@@ -1,23 +1,31 @@
 class todoList {
     constructor() {
         this.tasks = [];
+        this.taskCount = 0;
     }
 
     createTask(title, dueDate, priority, description, checklistItems) {
         const task = new todoItem(title, dueDate, priority, description, checklistItems);
         this.tasks.push(task);
+        this.taskCount++;
         return task;
     }
 
     addTask(task) {
         this.tasks.push(task);
+        this.taskCount++;
     }
 
     deleteTask(task) {
         const index = this.tasks.indexOf(task);
         if(index !== -1) {
             this.tasks.splice(index, 1);
+            this.taskCount--;
         }
+    }
+
+    getTaskCount(task) {
+        return this.taskCount;
     }
 }
 
@@ -58,7 +66,12 @@ export function initLists() {
     const todayTasks = new todoList();
     const tomorrowTasks = new todoList();
 
-    inboxTasks.createTask('Task 1', '2024 20 8, high, sexy and I know it, array of checklist');
+    inboxTasks.createTask(
+        'Task 1',
+        '2024 20 8',
+        'high',
+        'sexy and I know it',
+        [1, 2, 3]);
     inboxTasks.createTask('Task 2', '2024-01-02', 'Medium', 'This is task 2', []);
     inboxTasks.createTask('Task 3', '2024-01-03', 'Low', 'This is task 3', []);
 

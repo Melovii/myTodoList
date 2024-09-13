@@ -27,22 +27,3 @@ function initApp() {
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
-
-
-
-// import githubIcon from './assets/icons/github.png';
-
-// import { TodoListController } from './controller,js';
-// import { TodoListView } from './view.js';
-// import { TodoListModel } from './model.js';
-// import { helpers } from '../utils/helpers.js';
-
-// const todoListController = new TodoListController();
-// const todoListView = new TodoListView();
-// const todoListModel = new TodoListModel();
-
-// todoListController.init(todoListModel, todoListView);
-
-// const github = document.querySelector('footer img');
-// github.src = githubIcon;
-// github.alt = 'github logo';

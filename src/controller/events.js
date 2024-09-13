@@ -12,13 +12,45 @@ const todoLists = {
     tomorrow: tomorrowTasks
 };
 
+    function updateTaskCount() {
+        const inboxCount = document.querySelector('.inbox-count');
+        const todayCount = document.querySelector('.today-count');
+        const tomorrowCount = document.querySelector('.tomorrow-count');
+
+        inboxCount.textContent = todoLists.inbox.getTaskCount();
+        todayCount.textContent = todoLists.today.getTaskCount();
+        tomorrowCount.textContent = todoLists.tomorrow.getTaskCount();
+    }
+
+function setupInputListener() {
+    const input = document.querySelector('.new-task');
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && input.value.length > 0) {
+            const newTask = new todoItem(input.value, '', '', '', []);
+            currentList.addTask(newTask);
+            appendTask(newTask)
+            input.value = '';
+            updateTaskCount();
+            console.log(currentList.tasks); // TODO: UPDATE TASK VIEW?
+        }
+    });
+}
+
 function setupEventListeners() {
+    // initialize list with inbox
+    console.log("setting up event listeners!");
+    currentList = todoLists.inbox;
+    listRenderer('Inbox');
+    renderTasks(currentList.tasks);
+    updateTaskCount();
+
     // buttons to load lists
     const inboxButton = document.querySelector('.inbox');
     inboxButton.addEventListener('click', () => {
         currentList = todoLists.inbox;
         listRenderer('Inbox');
         renderTasks(currentList.tasks);
+        setupInputListener();
     });
 
     const todayButton = document.querySelector('.today');
@@ -26,6 +58,7 @@ function setupEventListeners() {
         currentList = todoLists.today;
         listRenderer('Today');
         renderTasks(currentList.tasks);
+        setupInputListener();
     });
 
     const tomorrowButton = document.querySelector('.tomorrow');
@@ -33,6 +66,7 @@ function setupEventListeners() {
         currentList = todoLists.tomorrow;
         listRenderer('Tomorrow');
         renderTasks(currentList.tasks);
+        setupInputListener();
     });
 
     function addProject() {
@@ -44,18 +78,21 @@ function setupEventListeners() {
     const plusButton = document.querySelector('.plus-icon');
     plusButton.addEventListener('click', addProject);
 
-    // to-do object input
-    const input = document.querySelector('.new-task');
-    input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && input.value.length > 0) {
-            // input.blur();
-            const newTask = new todoItem(input.value, '', '', '', []);
-            currentList.addTask(newTask);
-            appendTask(newTask)
-            input.value = '';
-            console.log(currentList.tasks); // TODO: UPDATE TASK VIEW?
-        }
-    });
+    // initial input event listener
+    setupInputListener();
 }
+
+
+export function checkEvent(task) {
+    // todoLists.deleteTask(task);
+    console.log("uhh did you delete a task? lol");
+    // TODO: do?
+}
+
+export function optionsEvent(task) {
+    console.log('bomboclatt?');
+    // TODO: display task options
+}
+
 
 export default setupEventListeners;
