@@ -1,47 +1,61 @@
 console.log('events.js is being executed');
 
-import { listRenderer } from '../view/listRenderer.js';
-    import { todoList } from '../model/data.js';
-    const myTodoList = new todoList();
+import {appendTask, listRenderer, renderTasks} from '../view/listRenderer.js';
+import { initLists, todoItem } from '../model/data.js';
 
+const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
+let currentList = inboxTasks; // Ensure this always references a todoList instance
 
-    function setupEventListeners() {
+const todoLists = {
+    inbox: inboxTasks,
+    today: todayTasks,
+    tomorrow: tomorrowTasks
+};
 
-        // TODO: SPLIT FILE INTO MULTIPLE FILES
+function setupEventListeners() {
+    // buttons to load lists
+    const inboxButton = document.querySelector('.inbox');
+    inboxButton.addEventListener('click', () => {
+        currentList = todoLists.inbox;
+        listRenderer('Inbox');
+        renderTasks(currentList.tasks);
+    });
 
-        // buttons to load lists
-        const inboxButton = document.querySelector('.inbox');
-        inboxButton.addEventListener('click', () => {
-            listRenderer('Inbox');
-        });
+    const todayButton = document.querySelector('.today');
+    todayButton.addEventListener('click', () => {
+        currentList = todoLists.today;
+        listRenderer('Today');
+        renderTasks(currentList.tasks);
+    });
 
-        const todayButton = document.querySelector('.today');
-        todayButton.addEventListener('click', () => {
-            listRenderer('Today');
-        });
+    const tomorrowButton = document.querySelector('.tomorrow');
+    tomorrowButton.addEventListener('click', () => {
+        currentList = todoLists.tomorrow;
+        listRenderer('Tomorrow');
+        renderTasks(currentList.tasks);
+    });
 
-        const tomorrowButton = document.querySelector('.tomorrow');
-        tomorrowButton.addEventListener('click', () => {
-            listRenderer('Tomorrow');
-        });
-
-        function addProject() {
-            console.log('potato');
-        }
-
-        const plusButton = document.querySelector('.plus-icon');
-        plusButton.addEventListener('click', addProject);
+    function addProject() {
+        console.log('testing "add project" button');
+        // TODO: loadProjectOption(); // import from projects.js
     }
 
+    // button to add project
+    const plusButton = document.querySelector('.plus-icon');
+    plusButton.addEventListener('click', addProject);
+
+    // to-do object input
     const input = document.querySelector('.new-task');
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && input.value.length > 0) {
-            console.log('sex?');
-            myTodoList.addTask(input.value);
+            // input.blur();
+            const newTask = new todoItem(input.value, '', '', '', []);
+            currentList.addTask(newTask);
+            appendTask(newTask)
             input.value = '';
-            // updateList(); // TODO: add a parameter => `list` for whichever list is to update
-            console.log(myTodoList); // TODO: UPDATE TASK VIEW?
+            console.log(currentList.tasks); // TODO: UPDATE TASK VIEW?
         }
     });
+}
 
-    export default setupEventListeners;
+export default setupEventListeners;

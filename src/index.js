@@ -8,7 +8,7 @@ import tomorrowIcon from './assets/icons/tomorrow.svg';
 import { listRenderer } from './view/listRenderer.js';
 
 function initApp() {
-    listRenderer('Inbox');
+    listRenderer('Inbox'); // TODO: add inboxTasks parameter
 
     const setupEventListeners = require('./controller/events.js').default;
     setupEventListeners();
