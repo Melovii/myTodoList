@@ -1,8 +1,10 @@
+import {todoList} from "../model/data";
+
 console.log('listRenderer.js is being executed');
 
 import createElement from "../utils/helpers.js";
 import optionsIcon from "../assets/icons/options.svg";
-import { checkEvent, optionsEvent }  from '../controller/events.js';
+import { checkEvent, optionsEvent, setupInputListener }  from '../controller/events.js';
 
 export function listRenderer(title) {
     const container = document.querySelector('.list');
@@ -23,6 +25,7 @@ export function listRenderer(title) {
 
     container.appendChild(input);
     container.appendChild(taskListElement);
+    setupInputListener();
 }
 
 export function renderTasks(tasks) {
@@ -43,7 +46,7 @@ export function renderTaskInfo(task) {
     container.appendChild(infoHeader);
 
     const titleContainer = createElement('div', '', { class: 'title-container'} );
-    const infoTitle = createElement('p', task.title, { class: 'info-title' });
+    const infoTitle = createElement('p', task.title, { class: 'info-title', contenteditable: 'true' }); // TODO: make it not work when blank
     infoTitle.style.fontSize = '23px';
     infoTitle.style.margin = '25px 0';
     titleContainer.appendChild(infoTitle);
@@ -51,10 +54,10 @@ export function renderTaskInfo(task) {
 
     const infoUtil = createElement('div', '', { class: 'info-util' });
 
-    const taskDueDate = createElement('p', `Due Date: ${task.description}`);
+    const taskDueDate = createElement('p', task.dueDate);
     infoUtil.appendChild(taskDueDate);
 
-    const taskPriority = createElement('p', `Priority: ${task.dueDate}`);
+    const taskPriority = createElement('p', task.description, { contenteditable: 'true' }); // TODO: make it work for only numbers n allat
     infoUtil.appendChild(taskPriority);
     infoHeader.appendChild(infoUtil);
 
@@ -64,23 +67,43 @@ export function renderTaskInfo(task) {
     const infoBody = createElement('div', '', { class: 'info-body' });
     container.appendChild(infoBody);
 
-    const taskDescription = createElement('p', `Description: ${task.priority}`);
+    const taskDescription = createElement('p', task.priority, { contenteditable: 'true' });
     infoBody.appendChild(taskDescription);
 
     const taskCheckList = createElement('ul', '', { class: 'checklist' });
     if (Array.isArray(task.checklistItems) && task.checklistItems.length > 0) {
         task.checklistItems.forEach(item => {
-            const listItem = createElement('li', item);
+            const listItem = createElement('li', item, { contenteditable: 'true' });
             taskCheckList.appendChild(listItem);
         });
     } else {
-        const noItemsMessage = createElement('li', 'No checklist items.');
+        const noItemsMessage = createElement('li', 'No checklist items.', { contenteditable: 'true' });
         taskCheckList.appendChild(noItemsMessage);
     }
     infoBody.appendChild(taskCheckList);
+
+    // Handle updating the task when 'Enter' is pressed
+    [infoTitle, taskDueDate, taskPriority, taskDescription].forEach(field => {
+        field.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();  // prevent newline in contenteditable
+
+                // update the task properties
+                task.title = infoTitle.textContent;
+                task.dueDate = taskDueDate.textContent.replace('Due Date: ', '');
+                task.priority = taskPriority.textContent.replace('Priority: ', '');
+                task.description = taskDescription.textContent.replace('Description: ', '');
+
+                // unfocus
+                field.blur();
+
+                // Update the task list view everywhere
+                // renderTasks(tasks); // ! UHH TODO: UHHH SHOULD BE ABLE TO RENDER TASKS???
+                console.log('so uhh, I work??');
+            }
+        });
+    });
 }
-
-
 
 export function appendTask(task) {
     const taskList = document.querySelector('.task-list');
@@ -106,6 +129,20 @@ export function appendTask(task) {
     taskContainer.appendChild(optionContainer);
     taskList.appendChild(taskContainer);
     taskList.appendChild(divider);
+}
+
+export function appendProject(project) {
+    const container = document.querySelector('.sidebar');
+    const projectContainer = createElement('div', '', { class: 'sidebar-option projects' });
+    const projectTitle = createElement('p', project.name);
+
+    projectContainer.addEventListener('click', () => {
+        listRenderer(project.name);
+        renderTasks(project.tasks);
+    });
+
+    projectContainer.appendChild(projectTitle);
+    container.appendChild(projectContainer);
 }
 
 export default listRenderer;

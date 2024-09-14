@@ -1,5 +1,8 @@
+const projects = [];
+
 class todoList {
-    constructor() {
+    constructor(name = '') {
+        this.name = name;
         this.tasks = [];
         this.taskCount = 0;
     }
@@ -26,6 +29,10 @@ class todoList {
 
     getTaskCount(task) {
         return this.taskCount;
+    }
+
+    setName(name) {
+        this.name = name;
     }
 }
 
@@ -60,6 +67,22 @@ class todoItem {
         return this.checklistItems;
     }
 }
+
+export function createProject(projectName) {
+    // Check if the project already exists
+    const existingProject = projects.find(project => project.name === projectName);
+    if (existingProject) {
+        console.log(`Project ${projectName} already exists.`);
+        return 0;
+    }
+
+    // Create a new project and add it to the array
+    const newProject = new todoList(projectName);
+    projects.push(newProject);
+    console.log(`Project ${projectName} has been created successfully.`);
+    return newProject;
+}
+
 
 export function initLists() {
     const inboxTasks = new todoList();

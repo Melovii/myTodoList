@@ -184,7 +184,6 @@ nav {
 
 .todo > .divider {
     width: 95%;
-    margin-bottom: -10px;
 }
 
 .info-header {
@@ -209,7 +208,7 @@ nav {
 .info-body {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 90%;
     gap: 15px;
 }
 

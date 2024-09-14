@@ -1,7 +1,7 @@
 console.log('events.js is being executed');
 
-import {appendTask, listRenderer, renderTasks} from '../view/listRenderer.js';
-import { initLists, todoItem } from '../model/data.js';
+import {appendProject, appendTask, listRenderer, renderTasks} from '../view/listRenderer.js';
+import {createProject, initLists, todoItem} from '../model/data.js';
 
 const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
 let currentList = inboxTasks; // Ensure this always references a todoList instance
@@ -12,17 +12,17 @@ const todoLists = {
     tomorrow: tomorrowTasks
 };
 
-    function updateTaskCount() {
-        const inboxCount = document.querySelector('.inbox-count');
-        const todayCount = document.querySelector('.today-count');
-        const tomorrowCount = document.querySelector('.tomorrow-count');
+function updateTaskCount() {
+    const inboxCount = document.querySelector('.inbox-count');
+    const todayCount = document.querySelector('.today-count');
+    const tomorrowCount = document.querySelector('.tomorrow-count');
 
-        inboxCount.textContent = todoLists.inbox.getTaskCount();
-        todayCount.textContent = todoLists.today.getTaskCount();
-        tomorrowCount.textContent = todoLists.tomorrow.getTaskCount();
-    }
+    inboxCount.textContent = todoLists.inbox.getTaskCount();
+    todayCount.textContent = todoLists.today.getTaskCount();
+    tomorrowCount.textContent = todoLists.tomorrow.getTaskCount();
+}
 
-function setupInputListener() {
+export function setupInputListener() {
     const input = document.querySelector('.new-task');
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && input.value.length > 0) {
@@ -50,7 +50,6 @@ function setupEventListeners() {
         currentList = todoLists.inbox;
         listRenderer('Inbox');
         renderTasks(currentList.tasks);
-        setupInputListener();
     });
 
     const todayButton = document.querySelector('.today');
@@ -58,7 +57,6 @@ function setupEventListeners() {
         currentList = todoLists.today;
         listRenderer('Today');
         renderTasks(currentList.tasks);
-        setupInputListener();
     });
 
     const tomorrowButton = document.querySelector('.tomorrow');
@@ -66,12 +64,13 @@ function setupEventListeners() {
         currentList = todoLists.tomorrow;
         listRenderer('Tomorrow');
         renderTasks(currentList.tasks);
-        setupInputListener();
     });
 
     function addProject() {
         console.log('testing "add project" button');
-        // TODO: loadProjectOption(); // import from projects.js
+        let project = createProject('name');
+        if (project)
+            appendProject(project);
     }
 
     // button to add project
