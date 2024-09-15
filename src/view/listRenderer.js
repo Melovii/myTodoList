@@ -1,10 +1,7 @@
-import {todoList} from "../model/data";
 
-console.log('listRenderer.js is being executed');
-
-import createElement from "../utils/helpers.js";
-import optionsIcon from "../assets/icons/options.svg";
-import { checkEvent, optionsEvent, setupInputListener }  from '../controller/events.js';
+import { createElement } from '../utils/helpers.js';
+import { setupInputListener }  from '../controller/events.js';
+import { appendTask } from './projects';
 
 export function listRenderer(title) {
     const container = document.querySelector('.list');
@@ -98,51 +95,11 @@ export function renderTaskInfo(task) {
                 field.blur();
 
                 // Update the task list view everywhere
-                // renderTasks(tasks); // ! UHH TODO: UHHH SHOULD BE ABLE TO RENDER TASKS???
+                // ! renderTasks(tasks); // ! UHH TODO: UHHH SHOULD BE ABLE TO RENDER TASKS???
                 console.log('so uhh, I work??');
             }
         });
     });
-}
-
-export function appendTask(task) {
-    const taskList = document.querySelector('.task-list');
-
-    const taskContainer = createElement('div', '', { class: 'task-container' });
-    const taskTitle = createElement('p', task.title);
-    const optionContainer = createElement('div', '', { class: 'option-container' });
-    const checkMark = createElement('div', '', { class: 'checkmark' });
-    const optionDots = createElement('img', '', { class: 'options' });
-    const divider = createElement('div', '', { class: 'divider'} );
-
-    taskTitle.style.cursor = 'pointer';
-    taskTitle.addEventListener('click', () => renderTaskInfo(task));
-
-    optionDots.src = optionsIcon;
-    checkMark.addEventListener('click', () => checkEvent(task));
-    optionDots.addEventListener('click', () => optionsEvent(task));
-
-    optionContainer.appendChild(checkMark);
-    optionContainer.appendChild(optionDots);
-
-    taskContainer.appendChild(taskTitle);
-    taskContainer.appendChild(optionContainer);
-    taskList.appendChild(taskContainer);
-    taskList.appendChild(divider);
-}
-
-export function appendProject(project) {
-    const container = document.querySelector('.sidebar');
-    const projectContainer = createElement('div', '', { class: 'sidebar-option projects' });
-    const projectTitle = createElement('p', project.name);
-
-    projectContainer.addEventListener('click', () => {
-        listRenderer(project.name);
-        renderTasks(project.tasks);
-    });
-
-    projectContainer.appendChild(projectTitle);
-    container.appendChild(projectContainer);
 }
 
 export default listRenderer;

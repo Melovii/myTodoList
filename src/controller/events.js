@@ -1,7 +1,6 @@
-console.log('events.js is being executed');
-
-import {appendProject, appendTask, listRenderer, renderTasks} from '../view/listRenderer.js';
-import {createProject, initLists, todoItem} from '../model/data.js';
+import { listRenderer, renderTasks } from '../view/listRenderer.js';
+import { initLists, todoItem } from '../model/data.js';
+import { appendTask, getProjectInput } from '../view/projects';
 
 const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
 let currentList = inboxTasks; // Ensure this always references a todoList instance
@@ -12,7 +11,7 @@ const todoLists = {
     tomorrow: tomorrowTasks
 };
 
-function updateTaskCount() {
+function updateTaskCount() { // TODO: maybe add it in updateView or sumin and pass it as parameter here to use it idk?
     const inboxCount = document.querySelector('.inbox-count');
     const todayCount = document.querySelector('.today-count');
     const tomorrowCount = document.querySelector('.tomorrow-count');
@@ -31,14 +30,14 @@ export function setupInputListener() {
             appendTask(newTask)
             input.value = '';
             updateTaskCount();
-            console.log(currentList.tasks); // TODO: UPDATE TASK VIEW?
+            // console.log(currentList.tasks); // TODO: UPDATE TASK VIEW?
         }
     });
 }
 
 function setupEventListeners() {
     // initialize list with inbox
-    console.log("setting up event listeners!");
+    // console.log("setting up event listeners!");
     currentList = todoLists.inbox;
     listRenderer('Inbox');
     renderTasks(currentList.tasks);
@@ -67,10 +66,7 @@ function setupEventListeners() {
     });
 
     function addProject() {
-        console.log('testing "add project" button');
-        let project = createProject('name');
-        if (project)
-            appendProject(project);
+        getProjectInput();
     }
 
     // button to add project
@@ -86,6 +82,11 @@ export function checkEvent(task) {
     // todoLists.deleteTask(task);
     console.log("uhh did you delete a task? lol");
     // TODO: do?
+}
+
+export function setCurrentList(projectName) {
+    currentList = projectName;
+    console.log(`just change current list to: ${projectName}`);
 }
 
 export function optionsEvent(task) {

@@ -72,7 +72,7 @@ export function createProject(projectName) {
     // Check if the project already exists
     const existingProject = projects.find(project => project.name === projectName);
     if (existingProject) {
-        console.log(`Project ${projectName} already exists.`);
+        alert(`Project ${projectName} already exists.`);
         return 0;
     }
 
