@@ -3,7 +3,7 @@ import { initLists, todoItem } from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
 
 const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
-let currentList = inboxTasks; // Ensure this always references a todoList instance
+let currentList = inboxTasks;
 
 const todoLists = {
     inbox: inboxTasks,
@@ -11,7 +11,7 @@ const todoLists = {
     tomorrow: tomorrowTasks
 };
 
-function updateTaskCount() { // TODO: maybe add it in updateView or sumin and pass it as parameter here to use it idk?
+function updateTaskCount() {
     const inboxCount = document.querySelector('.inbox-count');
     const todayCount = document.querySelector('.today-count');
     const tomorrowCount = document.querySelector('.tomorrow-count');
@@ -77,11 +77,16 @@ function setupEventListeners() {
     setupInputListener();
 }
 
-
 export function checkEvent(task) {
     // todoLists.deleteTask(task);
     console.log("uhh did you delete a task? lol");
     // TODO: do?
+}
+
+export function deleteEvent(task) {
+    currentList.deleteTask(task);
+    renderTasks(currentList.tasks);
+    updateTaskCount(currentList);
 }
 
 export function setCurrentList(projectName) {
@@ -89,9 +94,8 @@ export function setCurrentList(projectName) {
     console.log(`just change current list to: ${projectName}`);
 }
 
-export function optionsEvent(task) {
-    console.log('bomboclatt?');
-    // TODO: display task options
+export function getCurrentList() {
+    return currentList;
 }
 
 
