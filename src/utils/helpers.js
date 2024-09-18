@@ -10,5 +10,3 @@ export function createElement(tag, text, attributes = {}) {
 }
 
 // date function?
-
-export default createElement;

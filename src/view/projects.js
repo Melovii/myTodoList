@@ -1,6 +1,6 @@
 import { createElement } from '../utils/helpers';
 import { createProject } from '../model/data';
-import {checkEvent, deleteEvent, setCurrentList} from '../controller/events';
+import {deleteEvent, setCurrentList, updateTasks} from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
 
 // ! DO THIS: TODO: use the setName(name) method to edit project name
@@ -9,9 +9,9 @@ export function appendTask(task) {
     const taskList = document.querySelector('.task-list');
 
     const taskContainer = createElement('div', '', { class: 'task-container' });
-    const taskTitle = createElement('p', task.title);
-    const checkMark = createElement('div', '', { class: 'checkmark' });
+    const taskTitle = createElement('p', task.title, { class: task.checked ? 'completed' : '' });
     const divider = createElement('div', '', { class: 'divider' });
+    const checkMark = createElement('div', '', { class: `checkmark ${task.checked ? 'checked' : ''}` });
     const trashContainer = createElement('div', '', { class: 'trash-container' });
     const trashCan = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     trashCan.classList.add('trash-svg');
@@ -27,10 +27,15 @@ export function appendTask(task) {
     taskTitle.style.cursor = 'pointer';
     taskTitle.addEventListener('click', () => renderTaskInfo(task));
 
-    checkMark.addEventListener('click', () => checkEvent(task));
-    trashCan.addEventListener('click', () => deleteEvent(task));
-    trashCan.addEventListener('click', () => {
+    checkMark.addEventListener('click', () => {
+        task.checked = !task.checked;
+        checkMark.classList.toggle('checked', task.checked);
+        taskTitle.classList.toggle('completed', task.checked);
+
+        updateTasks();
     });
+
+    trashCan.addEventListener('click', () => deleteEvent(task));
 
     trashContainer.appendChild(checkMark);
     trashContainer.appendChild(trashCan);

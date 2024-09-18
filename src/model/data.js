@@ -9,6 +9,7 @@ class todoList {
 
     createTask(title, dueDate, priority, description, checklistItems) {
         const task = new todoItem(title, dueDate, priority, description, checklistItems);
+        task.checked = false;
         this.tasks.push(task);
         this.taskCount++;
         return task;
@@ -27,7 +28,7 @@ class todoList {
         }
     }
 
-    getTaskCount(task) {
+    getTaskCount() {
         return this.taskCount;
     }
 
@@ -37,28 +38,12 @@ class todoList {
 }
 
 class todoItem {
-    constructor(title, dueDate, priority, description, checklistItems) {
+    constructor(title, dueDate, priority, description) {
         this.title = title;
         this.dueDate = dueDate;
         this.priority = priority;
         this.description = description;
-        this.checklistItems = checklistItems;
-    }
-
-    setTitle(newTitle) {
-        this.title = newTitle;
-    }
-
-    setDescription(newDescription) {
-        this.description = newDescription;
-    }
-
-    setPriority(newPriority) {
-        this.priority = newPriority
-    }
-
-    get checklist() {
-        return this.checklistItems;
+        this.checked = false;
     }
 }
 
@@ -73,24 +58,22 @@ export function createProject(projectName) {
     // Create a new project and add it to the array
     const newProject = new todoList(projectName);
     projects.push(newProject);
-    console.log(`Project ${projectName} has been created successfully.`);
     return newProject;
 }
-
 
 export function initLists() {
     const inboxTasks = new todoList();
     const todayTasks = new todoList();
     const tomorrowTasks = new todoList();
 
-    inboxTasks.createTask('Task 1', '2024-08-20', 'high', 'sexy and I know it', [1, 2, 3]);
-    inboxTasks.createTask('Task 2', '2024-01-02', 'medium', 'This is task 2', []);
-    inboxTasks.createTask('Task 3', '2024-01-03', 'low', 'This is task 3', []);
+    inboxTasks.createTask('Task 1', '2024-08-20', 'high', 'sexy and I know it');
+    inboxTasks.createTask('Task 2', '2024-01-02', 'medium', 'This is task 2');
+    inboxTasks.createTask('Task 3', '2024-01-03', 'low', 'This is task 3');
 
-    todayTasks.createTask('Task 4', '2024-08-11', 'high', 'This is task 4', []);
-    todayTasks.createTask('Task 5', '2024-08-11', 'medium', 'This is task 5', []);
+    todayTasks.createTask('Task 4', '2024-08-11', 'high', 'This is task 4');
+    todayTasks.createTask('Task 5', '2024-08-11', 'medium', 'This is task 5');
 
-    tomorrowTasks.createTask('Task 6', '2024-08-12', 'high', 'go to 42istanbul at 9.42am aha', ['sex', 'potato', 'stuff lmfao']);
+    tomorrowTasks.createTask('Task 6', '2024-08-12', 'high', 'go to 42istanbul at 9.42am aha');
 
     return {
         inboxTasks,

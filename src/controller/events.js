@@ -30,14 +30,12 @@ export function setupInputListener() {
             appendTask(newTask)
             input.value = '';
             updateTaskCount();
-            // console.log(currentList.tasks); // TODO: UPDATE TASK VIEW?
         }
     });
 }
 
 function setupEventListeners() {
     // initialize list with inbox
-    // console.log("setting up event listeners!");
     currentList = todoLists.inbox;
     listRenderer('Inbox');
     renderTasks(currentList.tasks);
@@ -77,12 +75,6 @@ function setupEventListeners() {
     setupInputListener();
 }
 
-export function checkEvent(task) {
-    // todoLists.deleteTask(task);
-    console.log("uhh did you delete a task? lol");
-    // TODO: do?
-}
-
 export function deleteEvent(task) {
     currentList.deleteTask(task);
     renderTasks(currentList.tasks);
@@ -97,10 +89,5 @@ export function setCurrentList(projectName) {
 export function updateTasks() {
     renderTasks(currentList.tasks);
 }
-
-export function getCurrentList() {
-    return currentList;
-}
-
 
 export default setupEventListeners;

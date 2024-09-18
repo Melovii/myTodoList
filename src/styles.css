@@ -175,6 +175,32 @@ nav {
     cursor: pointer;
 }
 
+.checkmark {
+    display: flex;
+    flex-shrink: 0;
+    border: solid 2px var(--text-color);
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.checkmark.checked {
+    background-color: var(--secondary-color);
+}
+
+.task-container .completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+.checkmark.checked::after {
+    content: '✔';
+    color: white;
+    font-size: 16px;
+}
+
 .checkmark:hover {
     border-color: var(--secondary-color);
 }
@@ -182,8 +208,8 @@ nav {
 .trash-svg {
     display: flex;
     flex-shrink: 0;
-    width: 1.2rem;
-    height: 2.2rem;
+    width: 1.35rem;
+    height: auto;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;

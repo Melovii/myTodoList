@@ -103,5 +103,3 @@ export function renderTaskInfo(task) {
         task.dueDate = taskDueDate.value;
     });
 }
-
-export default listRenderer;
