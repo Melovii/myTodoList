@@ -9,15 +9,6 @@ export function createElement(tag, text, attributes = {}) {
     return element;
 }
 
-export async function getIcons() {
-    for (let icon of document.querySelectorAll('.icon'))
-    {
-        let url = 'https://www.melovi.dev/images/' + icon.getAttribute('data-icon');
-        let response = await fetch(url);
-        icon.innerHTML = await response.text();
-    }
-}
-
 // date function?
 
 export default createElement;

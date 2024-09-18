@@ -104,6 +104,9 @@ nav {
     cursor: pointer;
 }
 
+.plus-icon:hover {
+    color: var(--secondary-color);
+}
 
 /* list */
 
@@ -172,17 +175,26 @@ nav {
     cursor: pointer;
 }
 
-.trash-icon {
+.checkmark:hover {
+    border-color: var(--secondary-color);
+}
+
+.trash-svg {
     display: flex;
     flex-shrink: 0;
     width: 1.2rem;
     height: 2.2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: fill 0.3s ease;
     cursor: pointer;
 }
 
-.trash-icon:hover {
-    /* replace with red version? */
-    /*fill: red;*/
+.trash-svg:hover {
+    stroke: #b90d0d;
 }
 
 /* todo */

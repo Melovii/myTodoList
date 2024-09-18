@@ -2,7 +2,6 @@ import { createElement } from '../utils/helpers';
 import { createProject } from '../model/data';
 import {checkEvent, deleteEvent, setCurrentList} from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
-import trashIcon from '../assets/icons/trashcan.svg';
 
 export function appendTask(task) {
     const taskList = document.querySelector('.task-list');
@@ -12,7 +11,14 @@ export function appendTask(task) {
     const checkMark = createElement('div', '', { class: 'checkmark' });
     const divider = createElement('div', '', { class: 'divider' });
     const trashContainer = createElement('div', '', { class: 'trash-container' });
-    const trashCan = createElement('img', '', { class: 'trash-icon' });
+    const trashCan = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    trashCan.classList.add('trash-svg');
+    trashCan.setAttribute('viewBox', '0 0 24 24');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6h14v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6z');
+
+    trashCan.appendChild(path);
 
     divider.style.margin = '6px';
 
@@ -20,8 +26,9 @@ export function appendTask(task) {
     taskTitle.addEventListener('click', () => renderTaskInfo(task));
 
     checkMark.addEventListener('click', () => checkEvent(task));
-    trashCan.src = trashIcon;
     trashCan.addEventListener('click', () => deleteEvent(task));
+    trashCan.addEventListener('click', () => {
+    });
 
     trashContainer.appendChild(checkMark);
     trashContainer.appendChild(trashCan);
