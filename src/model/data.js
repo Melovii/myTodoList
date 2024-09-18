@@ -45,12 +45,6 @@ class todoItem {
         this.checklistItems = checklistItems;
     }
 
-    editTask(newTitle, newDescription, newPriority) {
-        this.setTitle(newTitle);
-        this.setDescription(newDescription);
-        this.setPriority(newPriority);
-    }
-
     setTitle(newTitle) {
         this.title = newTitle;
     }
@@ -104,11 +98,5 @@ export function initLists() {
         tomorrowTasks
     };
 }
-
-// TESTING AREA:
-const inboxTasks = new todoList();
-// const todayTasks = new todoList();
-// const tomorrowTasks = new todoList();
-// const projectTasks = new todoList();
 
 export { todoList, todoItem };

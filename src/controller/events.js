@@ -94,6 +94,10 @@ export function setCurrentList(projectName) {
     console.log(`just change current list to: ${projectName}`);
 }
 
+export function updateTasks() {
+    renderTasks(currentList.tasks);
+}
+
 export function getCurrentList() {
     return currentList;
 }

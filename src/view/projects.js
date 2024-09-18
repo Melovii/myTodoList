@@ -3,6 +3,8 @@ import { createProject } from '../model/data';
 import {checkEvent, deleteEvent, setCurrentList} from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
 
+// ! DO THIS: TODO: use the setName(name) method to edit project name
+
 export function appendTask(task) {
     const taskList = document.querySelector('.task-list');
 
