@@ -1,4 +1,6 @@
-const projects = [];
+import {loadLocal} from "./storage";
+
+export const projects = [];
 
 class todoList {
     constructor(name = '') {
@@ -62,6 +64,16 @@ export function createProject(projectName) {
 }
 
 export function initLists() {
+    const loadedProjects = loadLocal();
+    if (loadedProjects) {
+        // Iterate over the projects and populate your data structures
+        loadedProjects.forEach((project) => {
+            // Create a new project object and add it to your projects array
+            const newProject = new todoList(project.name);
+            newProject.tasks = project.tasks.map((task) => new todoItem(task.title, task.dueDate, task.priority, task.description));
+            projects.push(newProject);
+        });
+    }
     const inboxTasks = new todoList();
     const todayTasks = new todoList();
     const tomorrowTasks = new todoList();

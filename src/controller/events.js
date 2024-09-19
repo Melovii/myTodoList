@@ -1,6 +1,7 @@
 import { listRenderer, renderTasks } from '../view/listRenderer.js';
 import { initLists, todoItem } from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
+import {saveLocal} from "../model/storage";
 
 const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
 let currentList = inboxTasks;
@@ -30,6 +31,7 @@ export function setupInputListener() {
             appendTask(newTask)
             input.value = '';
             updateTaskCount();
+            saveLocal();
         }
     });
 }
@@ -83,7 +85,6 @@ export function deleteEvent(task) {
 
 export function setCurrentList(projectName) {
     currentList = projectName;
-    console.log(`just change current list to: ${projectName}`);
 }
 
 export function updateTasks() {

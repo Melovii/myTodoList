@@ -1,14 +1,13 @@
-console.log('index.js is being executed');
-
 import './styles.css';
 import inboxIcon from './assets/icons/inbox.svg';
 import todayIcon from './assets/icons/today.svg';
 import tomorrowIcon from './assets/icons/tomorrow.svg';
 
+import { loadLocal } from './model/storage.js';
 import { listRenderer } from './view/listRenderer.js';
 
 function initApp() {
-    listRenderer('Inbox'); // TODO: add inboxTasks parameter
+    listRenderer('Inbox');
 
     const setupEventListeners = require('./controller/events.js').default;
     setupEventListeners();
@@ -26,4 +25,7 @@ function initApp() {
     tomorrow.alt = 'tomorrow icon';
 }
 
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', () => {
+    loadLocal();
+    initApp();
+});
