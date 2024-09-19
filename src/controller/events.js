@@ -20,6 +20,7 @@ function updateTaskCount() {
     inboxCount.textContent = todoLists.inbox.getTaskCount();
     todayCount.textContent = todoLists.today.getTaskCount();
     tomorrowCount.textContent = todoLists.tomorrow.getTaskCount();
+    saveLocal();
 }
 
 export function setupInputListener() {
@@ -81,6 +82,7 @@ export function deleteEvent(task) {
     currentList.deleteTask(task);
     renderTasks(currentList.tasks);
     updateTaskCount(currentList);
+    saveLocal();
 }
 
 export function setCurrentList(projectName) {
@@ -89,6 +91,7 @@ export function setCurrentList(projectName) {
 
 export function updateTasks() {
     renderTasks(currentList.tasks);
+    saveLocal();
 }
 
 export default setupEventListeners;

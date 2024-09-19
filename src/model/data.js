@@ -64,19 +64,19 @@ export function createProject(projectName) {
 }
 
 export function initLists() {
-    const loadedProjects = loadLocal();
-    if (loadedProjects) {
-        // Iterate over the projects and populate your data structures
-        loadedProjects.forEach((project) => {
-            // Create a new project object and add it to your projects array
-            const newProject = new todoList(project.name);
-            newProject.tasks = project.tasks.map((task) => new todoItem(task.title, task.dueDate, task.priority, task.description));
-            projects.push(newProject);
-        });
-    }
-    const inboxTasks = new todoList();
-    const todayTasks = new todoList();
-    const tomorrowTasks = new todoList();
+    // const loadedProjects = loadLocal();
+    // if (loadedProjects) {
+    //     // Iterate over the projects and populate your data structures
+    //     loadedProjects.forEach((project) => {
+    //         // Create a new project object and add it to your projects array
+    //         const newProject = new todoList(project.name);
+    //         newProject.tasks = project.tasks.map((task) => new todoItem(task.title, task.dueDate, task.priority, task.description));
+    //         projects.push(newProject);
+    //     });
+    // }
+    const inboxTasks = new todoList('inbox');
+    const todayTasks = new todoList('today');
+    const tomorrowTasks = new todoList('tomorrow');
 
     inboxTasks.createTask('Task 1', '2024-08-20', 'high', 'sexy and I know it');
     inboxTasks.createTask('Task 2', '2024-01-02', 'medium', 'This is task 2');
@@ -86,6 +86,10 @@ export function initLists() {
     todayTasks.createTask('Task 5', '2024-08-11', 'medium', 'This is task 5');
 
     tomorrowTasks.createTask('Task 6', '2024-08-12', 'high', 'go to 42istanbul at 9.42am aha');
+
+    projects.push(inboxTasks);
+    projects.push(todayTasks);
+    projects.push(tomorrowTasks);
 
     return {
         inboxTasks,
