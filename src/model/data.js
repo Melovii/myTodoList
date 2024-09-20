@@ -1,5 +1,6 @@
-import {loadLocal} from "./storage";
+import {loadLocal, saveLocal} from "./storage";
 
+export const defaultProjects = [];
 export const projects = [];
 
 class todoList {
@@ -20,6 +21,7 @@ class todoList {
     addTask(task) {
         this.tasks.push(task);
         this.taskCount++;
+        saveLocal();
     }
 
     deleteTask(task) {
@@ -28,6 +30,7 @@ class todoList {
             this.tasks.splice(index, 1);
             this.taskCount--;
         }
+        saveLocal();
     }
 
     getTaskCount() {
@@ -36,6 +39,7 @@ class todoList {
 
     setName(name) {
         this.name = name;
+        // ! saveLocal();
     }
 }
 
@@ -60,6 +64,7 @@ export function createProject(projectName) {
     // Create a new project and add it to the array
     const newProject = new todoList(projectName);
     projects.push(newProject);
+    // ! saveLocal();
     return newProject;
 }
 
@@ -90,6 +95,10 @@ export function initLists() {
     projects.push(inboxTasks);
     projects.push(todayTasks);
     projects.push(tomorrowTasks);
+
+    defaultProjects.push(inboxTasks);
+    defaultProjects.push(todayTasks);
+    defaultProjects.push(tomorrowTasks);
 
     return {
         inboxTasks,

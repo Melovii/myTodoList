@@ -1,7 +1,7 @@
 import { listRenderer, renderTasks } from '../view/listRenderer.js';
 import { initLists, todoItem } from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
-import {saveLocal} from "../model/storage";
+import { saveLocal } from "../model/storage";
 
 const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
 let currentList = inboxTasks;
