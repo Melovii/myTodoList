@@ -7,7 +7,8 @@ const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
 let currentList = inboxTasks;
 updateTaskCount();
 // saveDefaultProjects();
-console.log("default: ", defaultProjects);
+// initLists();
+// console.log("default: ", defaultProjects);
 
 function updateTaskCount() {
     const inboxCount = document.querySelector('.inbox-count');
@@ -30,6 +31,7 @@ export function setupInputListener() {
             input.value = '';
             updateTaskCount();
             saveProjects();
+            saveDefaultProjects();
         }
     });
 }
@@ -48,6 +50,7 @@ function setupEventListeners() {
         currentList = inboxTasks;
         listRenderer('Inbox');
         renderTasks(currentList.tasks);
+        console.log(inboxTasks.tasks);
     });
 
     const todayButton = document.querySelector('.today');
@@ -55,6 +58,7 @@ function setupEventListeners() {
         currentList = todayTasks;
         listRenderer('Today');
         renderTasks(currentList.tasks);
+        console.log(todayTasks.tasks);
     });
 
     const tomorrowButton = document.querySelector('.tomorrow');
@@ -62,6 +66,7 @@ function setupEventListeners() {
         currentList = tomorrowTasks;
         listRenderer('Tomorrow');
         renderTasks(currentList.tasks);
+        console.log(tomorrowTasks.tasks);
     });
 
 

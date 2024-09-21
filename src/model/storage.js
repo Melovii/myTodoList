@@ -52,8 +52,12 @@ export function loadProjects() {
 }
 
 export function saveDefaultProjects() {
-    try { // ! DOES NOT SAVE FOR SOME REASON TODO: fix this.. :(
+    try {
         console.log('Saving default projects...');
+        if (defaultProjects.length === 0) {
+            console.log("No default projects initialized. Loading default projects...");
+            initLists();
+        }
         const savedDefaultProjects = defaultProjects.map(project => ({
             name: project.name,
             taskCount: project.taskCount,
@@ -72,9 +76,10 @@ export function saveDefaultProjects() {
     }
 }
 
+
 export function loadDefaultProjects() {
     try {
-        initLists();
+        // initLists();
         const savedDefaultProjects = JSON.parse(localStorage.getItem('defaultProjects')) || [];
         if (savedDefaultProjects.length) {
             console.log("Loaded default projects from localStorage:", savedDefaultProjects);
@@ -92,6 +97,7 @@ export function loadDefaultProjects() {
                     project.addTask(task);
                 });
                 // ! appendProject(project);
+                console.log("Project loaded: ", project);
             });
         } else {
             console.log("No data found in localStorage for default projects.");
