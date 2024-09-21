@@ -84,8 +84,8 @@ export function appendProject(project) {
         }
     };
 
-    saveProjects();
-    saveDefaultProjects();
+    // saveProjects();
+    // saveDefaultProjects();
     updateProjectTaskCount();
 }
 
@@ -127,6 +127,7 @@ export function getProjectInput() {
                     appendProject(project);
                     setCurrentList(project);
                     listRenderer(project.name);
+                    saveProjects();
                 }
             } else {
                 alert('Please enter a valid project name');

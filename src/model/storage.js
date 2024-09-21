@@ -5,7 +5,6 @@ import { setCurrentList } from "../controller/events";
 
 export function saveProjects() {
     try {
-        return ; // ! CAUSES BUG: overwrites project content TODO: fix this..?
         console.log("Saving projects...");
         const savedProjects = projects.map(project => ({
             name: project.name,
@@ -81,7 +80,7 @@ export function loadDefaultProjects() {
             console.log("Loaded default projects from localStorage:", savedDefaultProjects);
             savedDefaultProjects.forEach(savedDefaultProject => {
                 console.log("Attempting to load project:", savedDefaultProject.name);
-                const project = createProject(savedDefaultProject.name);
+                const project = new todoList(savedDefaultProject.name);
                 savedDefaultProject.tasks.forEach(savedTask => {
                     const task = new todoItem(
                         savedTask.title,
