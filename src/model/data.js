@@ -85,12 +85,6 @@ export function initLists() {
     defaultProjects.push(inboxTasks);
     defaultProjects.push(todayTasks);
     defaultProjects.push(tomorrowTasks);
-
-    return {
-        inboxTasks,
-        todayTasks,
-        tomorrowTasks
-    };
 }
 
 export { todoList, todoItem };

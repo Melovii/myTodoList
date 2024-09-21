@@ -2,7 +2,7 @@ import { createElement } from '../utils/helpers';
 import { createProject } from '../model/data';
 import { deleteEvent, setCurrentList, updateTasks } from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
-import {loadProjects, saveProjects} from "../model/storage";
+import {loadProjects, saveDefaultProjects, saveProjects} from "../model/storage";
 
 // ! DO THIS: TODO: use the setName(name) method to edit project name
 
@@ -33,6 +33,7 @@ export function appendTask(task) {
         checkMark.classList.toggle('checked', task.checked);
         taskTitle.classList.toggle('completed', task.checked);
         saveProjects();
+        saveDefaultProjects();
 
         updateTasks();
     });
@@ -84,6 +85,7 @@ export function appendProject(project) {
     };
 
     saveProjects();
+    saveDefaultProjects();
     updateProjectTaskCount();
 }
 

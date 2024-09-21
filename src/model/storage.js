@@ -1,4 +1,4 @@
-import { createProject, defaultProjects, projects, todoItem } from './data';
+import {createProject, defaultProjects, projects, todoItem, todoList} from './data';
 import { appendProject } from "../view/projects";
 import { listRenderer, renderTasks } from "../view/listRenderer";
 import { setCurrentList } from "../controller/events";
@@ -105,8 +105,46 @@ export function loadDefaultProjects() {
 
 export function getDefaultProjects() {
     const defaultProjects = JSON.parse(localStorage.getItem('defaultProjects')) || [];
-    const inboxTasks = defaultProjects.find(project => project.name === 'inbox');
-    const todayTasks = defaultProjects.find(project => project.name === 'today');
-    const tomorrowTasks = defaultProjects.find(project => project.name === 'tomorrow');
+    const inboxProject = defaultProjects.find(project => project.name === 'inbox') || { name: 'inbox', tasks: [] };
+    const todayProject = defaultProjects.find(project => project.name === 'today') || { name: 'today', tasks: [] };
+    const tomorrowProject = defaultProjects.find(project => project.name === 'tomorrow') || { name: 'tomorrow', tasks: [] };
+
+    // Create instances of todoList
+    const inboxTasks = new todoList(inboxProject.name);
+    inboxProject.tasks.forEach(taskData => {
+        const task = new todoItem(
+            taskData.title,
+            taskData.dueDate,
+            taskData.priority,
+            taskData.description
+        );
+        task.checked = taskData.checked;
+        inboxTasks.addTask(task);
+    });
+
+    const todayTasks = new todoList(todayProject.name);
+    todayProject.tasks.forEach(taskData => {
+        const task = new todoItem(
+            taskData.title,
+            taskData.dueDate,
+            taskData.priority,
+            taskData.description
+        );
+        task.checked = taskData.checked;
+        todayTasks.addTask(task);
+    });
+
+    const tomorrowTasks = new todoList(tomorrowProject.name);
+    tomorrowProject.tasks.forEach(taskData => {
+        const task = new todoItem(
+            taskData.title,
+            taskData.dueDate,
+            taskData.priority,
+            taskData.description
+        );
+        task.checked = taskData.checked;
+        tomorrowTasks.addTask(task);
+    });
+
     return { inboxTasks, todayTasks, tomorrowTasks };
 }

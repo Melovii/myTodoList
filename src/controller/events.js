@@ -6,9 +6,8 @@ import {getDefaultProjects, loadDefaultProjects, saveDefaultProjects, saveProjec
 const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
 let currentList = inboxTasks;
 updateTaskCount();
-// initLists();
-// saveDefaultProjects();
-
+initLists();
+saveDefaultProjects();
 
 function updateTaskCount() {
     const inboxCount = document.querySelector('.inbox-count');
