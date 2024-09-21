@@ -3,7 +3,7 @@ import inboxIcon from './assets/icons/inbox.svg';
 import todayIcon from './assets/icons/today.svg';
 import tomorrowIcon from './assets/icons/tomorrow.svg';
 
-import { loadProjects } from './model/storage.js';
+import {loadDefaultProjects, loadProjects} from './model/storage.js';
 import { listRenderer } from './view/listRenderer.js';
 
 function initApp() {
@@ -26,6 +26,7 @@ function initApp() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadDefaultProjects()
     loadProjects();
     initApp();
 });

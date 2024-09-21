@@ -1,11 +1,11 @@
-import {createProject, defaultProjects, projects, todoItem, todoList} from './data';
+import {createProject, defaultProjects, initLists, projects, todoItem, todoList} from './data';
 import { appendProject } from "../view/projects";
 import { listRenderer, renderTasks } from "../view/listRenderer";
 import { setCurrentList } from "../controller/events";
 
-// Save all projects (normal projects)
 export function saveProjects() {
     try {
+        return ; // ! CAUSES BUG: overwrites project content TODO: fix this..?
         console.log("Saving projects...");
         const savedProjects = projects.map(project => ({
             name: project.name,
@@ -24,7 +24,6 @@ export function saveProjects() {
     }
 }
 
-// Load all projects (normal projects)
 export function loadProjects() {
     console.log("Loading projects...");
     try {
@@ -53,9 +52,8 @@ export function loadProjects() {
     }
 }
 
-// Save default projects separately
 export function saveDefaultProjects() {
-    try {
+    try { // ! DOES NOT SAVE FOR SOME REASON TODO: fix this.. :(
         console.log('Saving default projects...');
         const savedDefaultProjects = defaultProjects.map(project => ({
             name: project.name,
@@ -69,14 +67,15 @@ export function saveDefaultProjects() {
             }))
         }));
         localStorage.setItem('defaultProjects', JSON.stringify(savedDefaultProjects));
+        console.log("Saved default projects to localStorage:", savedDefaultProjects);
     } catch (error) {
         console.error("Error saving default projects to localStorage:", error);
     }
 }
 
-// Load default projects separately
 export function loadDefaultProjects() {
     try {
+        initLists();
         const savedDefaultProjects = JSON.parse(localStorage.getItem('defaultProjects')) || [];
         if (savedDefaultProjects.length) {
             console.log("Loaded default projects from localStorage:", savedDefaultProjects);
@@ -93,7 +92,7 @@ export function loadDefaultProjects() {
                     task.checked = savedTask.checked;
                     project.addTask(task);
                 });
-                appendProject(project);
+                // ! appendProject(project);
             });
         } else {
             console.log("No data found in localStorage for default projects.");
@@ -109,7 +108,6 @@ export function getDefaultProjects() {
     const todayProject = defaultProjects.find(project => project.name === 'today') || { name: 'today', tasks: [] };
     const tomorrowProject = defaultProjects.find(project => project.name === 'tomorrow') || { name: 'tomorrow', tasks: [] };
 
-    // Create instances of todoList
     const inboxTasks = new todoList(inboxProject.name);
     inboxProject.tasks.forEach(taskData => {
         const task = new todoItem(
