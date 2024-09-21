@@ -1,4 +1,4 @@
-import {loadLocal, saveLocal} from "./storage";
+import {loadProjects, saveProjects} from "./storage";
 
 export const defaultProjects = [];
 export const projects = [];
@@ -21,7 +21,7 @@ class todoList {
     addTask(task) {
         this.tasks.push(task);
         this.taskCount++;
-        saveLocal();
+        saveProjects();
     }
 
     deleteTask(task) {
@@ -30,7 +30,7 @@ class todoList {
             this.tasks.splice(index, 1);
             this.taskCount--;
         }
-        saveLocal();
+        saveProjects();
     }
 
     getTaskCount() {
@@ -39,7 +39,7 @@ class todoList {
 
     setName(name) {
         this.name = name;
-        // ! saveLocal();
+        // ! saveProjects();
     }
 }
 
@@ -64,21 +64,11 @@ export function createProject(projectName) {
     // Create a new project and add it to the array
     const newProject = new todoList(projectName);
     projects.push(newProject);
-    // ! saveLocal();
+    // ! saveProjects();
     return newProject;
 }
 
 export function initLists() {
-    // const loadedProjects = loadLocal();
-    // if (loadedProjects) {
-    //     // Iterate over the projects and populate your data structures
-    //     loadedProjects.forEach((project) => {
-    //         // Create a new project object and add it to your projects array
-    //         const newProject = new todoList(project.name);
-    //         newProject.tasks = project.tasks.map((task) => new todoItem(task.title, task.dueDate, task.priority, task.description));
-    //         projects.push(newProject);
-    //     });
-    // }
     const inboxTasks = new todoList('inbox');
     const todayTasks = new todoList('today');
     const tomorrowTasks = new todoList('tomorrow');
@@ -91,10 +81,6 @@ export function initLists() {
     todayTasks.createTask('Task 5', '2024-08-11', 'medium', 'This is task 5');
 
     tomorrowTasks.createTask('Task 6', '2024-08-12', 'high', 'go to 42istanbul at 9.42am aha');
-
-    projects.push(inboxTasks);
-    projects.push(todayTasks);
-    projects.push(tomorrowTasks);
 
     defaultProjects.push(inboxTasks);
     defaultProjects.push(todayTasks);

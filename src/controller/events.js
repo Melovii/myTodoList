@@ -1,26 +1,24 @@
 import { listRenderer, renderTasks } from '../view/listRenderer.js';
 import { initLists, todoItem } from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
-import { saveLocal } from "../model/storage";
+import {getDefaultProjects, loadDefaultProjects, saveDefaultProjects, saveProjects} from "../model/storage";
 
-const { inboxTasks, todayTasks, tomorrowTasks } = initLists();
+const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
 let currentList = inboxTasks;
+updateTaskCount();
+// initLists();
+// saveDefaultProjects();
 
-const todoLists = {
-    inbox: inboxTasks,
-    today: todayTasks,
-    tomorrow: tomorrowTasks
-};
 
 function updateTaskCount() {
     const inboxCount = document.querySelector('.inbox-count');
     const todayCount = document.querySelector('.today-count');
     const tomorrowCount = document.querySelector('.tomorrow-count');
 
-    inboxCount.textContent = todoLists.inbox.getTaskCount();
-    todayCount.textContent = todoLists.today.getTaskCount();
-    tomorrowCount.textContent = todoLists.tomorrow.getTaskCount();
-    saveLocal();
+    inboxCount.textContent = inboxTasks.taskCount;
+    todayCount.textContent = todayTasks.taskCount;
+    tomorrowCount.textContent = tomorrowTasks.taskCount;
+    // saveDefaultProjects();
 }
 
 export function setupInputListener() {
@@ -32,39 +30,41 @@ export function setupInputListener() {
             appendTask(newTask)
             input.value = '';
             updateTaskCount();
-            saveLocal();
+            saveProjects();
         }
     });
 }
 
 function setupEventListeners() {
-    // initialize list with inbox
-    currentList = todoLists.inbox;
+    // // initialize list with inbox
+    currentList = inboxTasks;
     listRenderer('Inbox');
     renderTasks(currentList.tasks);
     updateTaskCount();
 
-    // buttons to load lists
+    // // buttons to load lists
+
     const inboxButton = document.querySelector('.inbox');
     inboxButton.addEventListener('click', () => {
-        currentList = todoLists.inbox;
+        currentList = inboxTasks;
         listRenderer('Inbox');
         renderTasks(currentList.tasks);
     });
 
     const todayButton = document.querySelector('.today');
     todayButton.addEventListener('click', () => {
-        currentList = todoLists.today;
+        currentList = todayTasks;
         listRenderer('Today');
         renderTasks(currentList.tasks);
     });
 
     const tomorrowButton = document.querySelector('.tomorrow');
     tomorrowButton.addEventListener('click', () => {
-        currentList = todoLists.tomorrow;
+        currentList = tomorrowTasks;
         listRenderer('Tomorrow');
         renderTasks(currentList.tasks);
     });
+
 
     function addProject() {
         getProjectInput();
@@ -82,7 +82,7 @@ export function deleteEvent(task) {
     currentList.deleteTask(task);
     renderTasks(currentList.tasks);
     updateTaskCount(currentList);
-    saveLocal();
+    saveProjects();
 }
 
 export function setCurrentList(projectName) {
@@ -91,7 +91,7 @@ export function setCurrentList(projectName) {
 
 export function updateTasks() {
     renderTasks(currentList.tasks);
-    saveLocal();
+    // saveProjects();
 }
 
 export default setupEventListeners;
