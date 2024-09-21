@@ -32,7 +32,7 @@ export function appendTask(task) {
         task.checked = !task.checked;
         checkMark.classList.toggle('checked', task.checked);
         taskTitle.classList.toggle('completed', task.checked);
-        // loadProjects();
+        saveProjects();
 
         updateTasks();
     });
@@ -83,7 +83,7 @@ export function appendProject(project) {
         }
     };
 
-    // saveProjects();
+    saveProjects();
     updateProjectTaskCount();
 }
 
