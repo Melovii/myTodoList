@@ -5,6 +5,7 @@ import tomorrowIcon from './assets/icons/tomorrow.svg';
 
 import {loadDefaultProjects, loadProjects} from './model/storage.js';
 import { listRenderer } from './view/listRenderer.js';
+import {renderPlaceholderImage} from "./utils/helpers";
 
 function initApp() {
     listRenderer('Inbox');
@@ -23,6 +24,8 @@ function initApp() {
     const tomorrow = document.querySelector('.tomorrow-icon');
     tomorrow.src = tomorrowIcon;
     tomorrow.alt = 'tomorrow icon';
+    renderPlaceholderImage()
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {

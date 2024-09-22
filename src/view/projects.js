@@ -142,18 +142,30 @@ export function getProjectInput() {
 // - Delete button loads the list of the project that was deleted
 // - Prevent the user from inserting an already existing project name
 
-// TODO: Add these:
-// - Replace editButton and deleteButton with a SVGs
-// - Change SVG colour on hover
 export function projectOptions(project) {
     const projectTitle = document.querySelector(`.${project.name}`);
     const projectTaskCount = projectTitle.nextElementSibling;
     const buttonContainer = createElement('div', '', { class: 'project-buttons' });
-    const deleteButton = createElement('div', '', { class: 'delete-project' });
-    const editButton = createElement('div', '', { class: 'edit-project' });
 
-    deleteButton.textContent = 'Delete';
-    editButton.textContent = 'Edit';
+    // buttonContainer.appendChild(deleteButton);
+    projectTitle.parentElement.insertBefore(buttonContainer, projectTaskCount);
+
+    const deleteButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    deleteButton.classList.add('trash-svg');
+    deleteButton.setAttribute('viewBox', '0 0 24 24');
+
+    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path1.setAttribute('d', 'M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6h14v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6z');
+
+    const editButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    editButton.classList.add('edit-project');
+    editButton.setAttribute('viewBox', '0 0 24 24');
+
+    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path2.setAttribute('d', 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z');
+
+    deleteButton.appendChild(path1);
+    editButton.appendChild(path2);
 
     deleteButton.addEventListener('click', () => {
         project.deleteProject();
@@ -174,5 +186,4 @@ export function projectOptions(project) {
 
     buttonContainer.appendChild(deleteButton);
     buttonContainer.appendChild(editButton);
-    projectTitle.parentElement.insertBefore(buttonContainer, projectTaskCount);
 }

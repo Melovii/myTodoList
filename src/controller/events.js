@@ -2,6 +2,7 @@ import { listRenderer, renderTasks } from '../view/listRenderer.js';
 import {defaultProjects, todoItem} from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
 import {getDefaultProjects, loadDefaultProjects, saveDefaultProjects, saveProjects} from "../model/storage";
+import {renderPlaceholderImage} from "../utils/helpers";
 
 const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
 defaultProjects.push(inboxTasks, todayTasks, tomorrowTasks);
@@ -83,10 +84,14 @@ function setupEventListeners() {
 }
 
 export function deleteEvent(task) {
+    const infoBody = document.querySelector('.todo');
+
     currentList.deleteTask(task);
     renderTasks(currentList.tasks);
     updateTaskCount();
     saveProjects();
+    infoBody.innerHTML = '';
+    renderPlaceholderImage();
 }
 
 export function setCurrentList(projectName) {

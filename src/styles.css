@@ -93,7 +93,14 @@ nav {
     font-weight: 600;
 }
 
+.task-num {
+    font-size: 20px;
+    color: var(--text-color);
+    margin-left: 2rem;
+}
+
 .project-count {
+    font-size: 20px;
     color: var(--text-color);
     margin-left: 2px;
 }
@@ -122,6 +129,10 @@ nav {
 }
 
 .plus-icon:hover {
+    color: var(--secondary-color);
+}
+
+.edit-project:hover {
     color: var(--secondary-color);
 }
 
@@ -222,7 +233,8 @@ nav {
     border-color: var(--secondary-color);
 }
 
-.trash-svg {
+.trash-svg,
+.edit-project {
     display: flex;
     flex-shrink: 0;
     width: 1.35rem;
@@ -271,7 +283,9 @@ nav {
 
 .title-container {
     display: flex;
+    overflow: hidden;
     justify-content: end;
+    max-width: 8rem;
 }
 
 .info-title {
@@ -289,6 +303,31 @@ nav {
 .info-body > p {
     display: flex;
     text-wrap: wrap;
+}
+
+.cat-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cat-image {
+    opacity: 0.35;
+    width: 350px;
+    height: auto;
+
+}
+
+.info-body-text {
+    opacity: 0.5;
+    width: 350px;
+    height: auto;
+    color: lightgrey;
+    text-align: center;
 }
 
 [contenteditable]:focus {
