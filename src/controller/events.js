@@ -27,7 +27,7 @@ export function setupInputListener() {
         if (event.key === 'Enter' && input.value.length > 0) {
             const newTask = new todoItem(input.value, '', '', '', []);
             currentList.addTask(newTask);
-            appendTask(newTask)
+            appendTask(newTask) // ! might be the reason for the taskCount removing buttons
             input.value = '';
             updateTaskCount();
             saveProjects();
@@ -85,7 +85,7 @@ function setupEventListeners() {
 export function deleteEvent(task) {
     currentList.deleteTask(task);
     renderTasks(currentList.tasks);
-    updateTaskCount(currentList);
+    updateTaskCount();
     saveProjects();
 }
 

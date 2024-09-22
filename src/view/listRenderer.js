@@ -85,7 +85,25 @@ export function renderTaskInfo(task) {
     container.appendChild(infoBody);
 
     const taskDescription = createElement('p', task.description, { contenteditable: 'true' });
+    if (taskDescription.textContent === '') {
+        taskDescription.textContent = 'Enter task description here...';
+        taskDescription.style.color = 'gray';
+    }
     infoBody.appendChild(taskDescription);
+
+    taskDescription.addEventListener('focus', () => {
+        if (taskDescription.textContent === 'Enter task description here...') {
+            taskDescription.textContent = '';
+            taskDescription.style.color = 'var(--text-color)';
+        }
+    });
+
+    taskDescription.addEventListener('blur', () => {
+        if (taskDescription.textContent === '') {
+            taskDescription.textContent = 'Enter task description here...';
+            taskDescription.style.color = 'gray';
+        }
+    });
 
     // update the task when 'Enter' is pressed
     [infoTitle, taskDescription].forEach(field => {

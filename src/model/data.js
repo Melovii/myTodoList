@@ -21,7 +21,6 @@ class todoList {
     addTask(task) {
         this.tasks.push(task);
         this.taskCount++;
-        // saveProjects();
     }
 
     deleteTask(task) {
@@ -40,7 +39,17 @@ class todoList {
 
     setName(name) {
         this.name = name;
-        // ! saveProjects();
+        saveProjects();
+        saveDefaultProjects();
+    }
+
+    deleteProject() {
+        const index = projects.indexOf(this);
+        if(index !== -1) {
+            projects.splice(index, 1);
+        }
+        saveProjects();
+        saveDefaultProjects();
     }
 }
 
@@ -63,7 +72,6 @@ export function createProject(projectName) {
 
     const newProject = new todoList(projectName);
     projects.push(newProject);
-    // ! saveProjects();
     return newProject;
 }
 

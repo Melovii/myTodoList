@@ -85,6 +85,7 @@ export function appendProject(project) {
     // saveProjects();
     // saveDefaultProjects();
     updateProjectTaskCount();
+    projectOptions(project)
 }
 
 export function getProjectInput() {
@@ -134,4 +135,44 @@ export function getProjectInput() {
     });
 
     inputField.focus();
+}
+
+// ! ISSUES WITH THIS FUNCTION:
+// TODO: Fix these:
+// - Delete button loads the list of the project that was deleted
+// - Prevent the user from inserting an already existing project name
+
+// TODO: Add these:
+// - Replace editButton and deleteButton with a SVGs
+// - Change SVG colour on hover
+export function projectOptions(project) {
+    const projectTitle = document.querySelector(`.${project.name}`);
+    const projectTaskCount = projectTitle.nextElementSibling;
+    const buttonContainer = createElement('div', '', { class: 'project-buttons' });
+    const deleteButton = createElement('div', '', { class: 'delete-project' });
+    const editButton = createElement('div', '', { class: 'edit-project' });
+
+    deleteButton.textContent = 'Delete';
+    editButton.textContent = 'Edit';
+
+    deleteButton.addEventListener('click', () => {
+        project.deleteProject();
+        projectTaskCount.remove();
+        projectTitle.remove();
+        buttonContainer.remove();
+        saveProjects();
+    });
+
+    editButton.addEventListener('click', () => {
+        const newName = prompt('Enter new project name:', project.name);
+        if (newName) {
+            project.setName(newName);
+            projectTitle.textContent = newName;
+            saveProjects();
+        }
+    });
+
+    buttonContainer.appendChild(deleteButton);
+    buttonContainer.appendChild(editButton);
+    projectTitle.parentElement.insertBefore(buttonContainer, projectTaskCount);
 }

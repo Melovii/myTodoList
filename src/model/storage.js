@@ -1,5 +1,5 @@
 import {createProject, defaultProjects, projects, todoItem, todoList} from './data';
-import { appendProject } from "../view/projects";
+import {appendProject, projectOptions} from "../view/projects";
 import { listRenderer, renderTasks } from "../view/listRenderer";
 import { setCurrentList } from "../controller/events";
 
