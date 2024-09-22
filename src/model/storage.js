@@ -1,4 +1,4 @@
-import {createProject, defaultProjects, initLists, projects, todoItem, todoList} from './data';
+import {createProject, defaultProjects, projects, todoItem, todoList} from './data';
 import { appendProject } from "../view/projects";
 import { listRenderer, renderTasks } from "../view/listRenderer";
 import { setCurrentList } from "../controller/events";
@@ -17,6 +17,7 @@ export function saveProjects() {
                 checked: task.checked
             }))
         }));
+        console.log("Saved projects to localStorage:", savedProjects);
         localStorage.setItem('projects', JSON.stringify(savedProjects));
     } catch (error) {
         console.error("Error saving projects to localStorage:", error);
@@ -24,7 +25,6 @@ export function saveProjects() {
 }
 
 export function loadProjects() {
-    console.log("Loading projects...");
     try {
         const savedProjects = JSON.parse(localStorage.getItem('projects')) || [];
         if (savedProjects.length) {
@@ -56,7 +56,6 @@ export function saveDefaultProjects() {
         console.log('Saving default projects...');
         if (defaultProjects.length === 0) {
             console.log("No default projects initialized. Loading default projects...");
-            initLists();
         }
         const savedDefaultProjects = defaultProjects.map(project => ({
             name: project.name,
@@ -69,8 +68,8 @@ export function saveDefaultProjects() {
                 checked: task.checked
             }))
         }));
-        localStorage.setItem('defaultProjects', JSON.stringify(savedDefaultProjects));
         console.log("Saved default projects to localStorage:", savedDefaultProjects);
+        localStorage.setItem('defaultProjects', JSON.stringify(savedDefaultProjects));
     } catch (error) {
         console.error("Error saving default projects to localStorage:", error);
     }
@@ -79,12 +78,10 @@ export function saveDefaultProjects() {
 
 export function loadDefaultProjects() {
     try {
-        // initLists();
         const savedDefaultProjects = JSON.parse(localStorage.getItem('defaultProjects')) || [];
         if (savedDefaultProjects.length) {
             console.log("Loaded default projects from localStorage:", savedDefaultProjects);
             savedDefaultProjects.forEach(savedDefaultProject => {
-                console.log("Attempting to load project:", savedDefaultProject.name);
                 const project = new todoList(savedDefaultProject.name);
                 savedDefaultProject.tasks.forEach(savedTask => {
                     const task = new todoItem(
@@ -96,8 +93,6 @@ export function loadDefaultProjects() {
                     task.checked = savedTask.checked;
                     project.addTask(task);
                 });
-                // ! appendProject(project);
-                console.log("Project loaded: ", project);
             });
         } else {
             console.log("No data found in localStorage for default projects.");

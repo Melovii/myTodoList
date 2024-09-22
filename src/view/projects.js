@@ -32,8 +32,6 @@ export function appendTask(task) {
         task.checked = !task.checked;
         checkMark.classList.toggle('checked', task.checked);
         taskTitle.classList.toggle('completed', task.checked);
-        saveProjects();
-        saveDefaultProjects();
 
         updateTasks();
     });

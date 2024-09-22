@@ -1,4 +1,4 @@
-import {loadProjects, saveProjects} from "./storage";
+import {loadProjects, saveDefaultProjects, saveProjects} from "./storage";
 
 export const defaultProjects = [];
 export const projects = [];
@@ -21,7 +21,7 @@ class todoList {
     addTask(task) {
         this.tasks.push(task);
         this.taskCount++;
-        saveProjects();
+        // saveProjects();
     }
 
     deleteTask(task) {
@@ -31,6 +31,7 @@ class todoList {
             this.taskCount--;
         }
         saveProjects();
+        saveDefaultProjects();
     }
 
     getTaskCount() {
@@ -64,25 +65,6 @@ export function createProject(projectName) {
     projects.push(newProject);
     // ! saveProjects();
     return newProject;
-}
-
-export function initLists() {
-    const inboxTasks = new todoList('inbox');
-    const todayTasks = new todoList('today');
-    const tomorrowTasks = new todoList('tomorrow');
-
-    // inboxTasks.createTask('Task 1', '2024-08-20', 'high', 'sexy and I know it');
-    // inboxTasks.createTask('Task 2', '2024-01-02', 'medium', 'This is task 2');
-    // inboxTasks.createTask('Task 3', '2024-01-03', 'low', 'This is task 3');
-    //
-    // todayTasks.createTask('Task 4', '2024-08-11', 'high', 'This is task 4');
-    // todayTasks.createTask('Task 5', '2024-08-11', 'medium', 'This is task 5');
-    //
-    // tomorrowTasks.createTask('Task 6', '2024-08-12', 'high', 'go to 42istanbul at 9.42am aha');
-
-    defaultProjects.push(inboxTasks);
-    defaultProjects.push(todayTasks);
-    defaultProjects.push(tomorrowTasks);
 }
 
 export { todoList, todoItem };

@@ -1,14 +1,14 @@
 import { listRenderer, renderTasks } from '../view/listRenderer.js';
-import {defaultProjects, initLists, todoItem} from '../model/data.js';
+import {defaultProjects, todoItem} from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
 import {getDefaultProjects, loadDefaultProjects, saveDefaultProjects, saveProjects} from "../model/storage";
 
 const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
+defaultProjects.push(inboxTasks, todayTasks, tomorrowTasks);
+
 let currentList = inboxTasks;
-updateTaskCount();
+// updateTaskCount();
 // saveDefaultProjects();
-// initLists();
-// console.log("default: ", defaultProjects);
 
 function updateTaskCount() {
     const inboxCount = document.querySelector('.inbox-count');
@@ -95,7 +95,8 @@ export function setCurrentList(projectName) {
 
 export function updateTasks() {
     renderTasks(currentList.tasks);
-    // saveProjects();
+    saveProjects();
+    saveDefaultProjects();
 }
 
 export default setupEventListeners;

@@ -1,7 +1,7 @@
 import { createElement } from '../utils/helpers.js';
 import {setupInputListener, updateTasks} from '../controller/events.js';
 import { appendTask } from './projects';
-import {saveProjects} from "../model/storage";
+import {saveDefaultProjects, saveProjects} from "../model/storage";
 
 export function listRenderer(title) {
     const container = document.querySelector('.list');
@@ -70,6 +70,7 @@ export function renderTaskInfo(task) {
     prioritySelect.addEventListener('change', (e) => {
         task.priority = e.target.value;
         saveProjects();
+        saveDefaultProjects();
     });
 
     containerPriority.appendChild(priorityLabel);
@@ -104,5 +105,6 @@ export function renderTaskInfo(task) {
     taskDueDate.addEventListener('change', () => {
         task.dueDate = taskDueDate.value;
         saveProjects();
+        saveDefaultProjects();
     });
 }
