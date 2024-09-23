@@ -1,10 +1,8 @@
-import { createElement } from '../utils/helpers';
-import {createProject, projects} from '../model/data';
+import {createElement, renderPlaceholderImage} from '../utils/helpers';
+import {createProject, defaultProjects, projects} from '../model/data';
 import { deleteEvent, setCurrentList, updateTasks } from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
 import {loadProjects, saveDefaultProjects, saveProjects} from "../model/storage";
-
-// ! DO THIS: TODO: use the setName(name) method to edit project name
 
 export function appendTask(task) {
     const taskList = document.querySelector('.task-list');
@@ -27,9 +25,6 @@ export function appendTask(task) {
 
     taskContainer.style.cursor = 'pointer';
     taskContainer.addEventListener('click', () => renderTaskInfo(task));
-
-    // taskTitle.style.cursor = 'pointer';
-    // taskTitle.addEventListener('click', () => renderTaskInfo(task));
 
     checkMark.addEventListener('click', () => {
         task.checked = !task.checked;
@@ -67,7 +62,8 @@ export function appendTask(task) {
 
     setTimeout(() => {
         taskContainer.classList.add('show');
-    }, 0);
+        divider.classList.add('show');
+    }, 100);
 }
 
 
@@ -158,18 +154,12 @@ export function getProjectInput() {
     inputField.focus();
 }
 
-// ! ISSUES WITH THIS FUNCTION:
-// TODO: Fix these:
-// - Delete button loads the list of the project that was deleted
-// - Prevent the user from inserting an already existing project name
-
 export function projectOptions(project) {
     const projectTitle = document.querySelector(`.${project.name}`);
     const projectContainer = projectTitle.parentElement;
     const projectTaskCount = projectTitle.nextElementSibling;
     const buttonContainer = createElement('div', '', { class: 'project-buttons' });
 
-    // buttonContainer.appendChild(deleteButton);
     projectTitle.parentElement.insertBefore(buttonContainer, projectTaskCount);
 
     const deleteButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -192,11 +182,8 @@ export function projectOptions(project) {
 
     deleteButton.addEventListener('click', () => {
         project.deleteProject();
-        // REMOVE THE DIV BRO LMFAOO
         projectContainer.remove();
-        // projectTaskCount.remove();
-        // projectTitle.remove();
-        // buttonContainer.remove();
+        // ! BUG TODO: render the placeholder image and render the inbox lists
         saveProjects();
     });
 

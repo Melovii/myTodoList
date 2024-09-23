@@ -8,8 +8,6 @@ const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
 defaultProjects.push(inboxTasks, todayTasks, tomorrowTasks);
 
 let currentList = inboxTasks;
-// updateTaskCount();
-// saveDefaultProjects();
 
 function updateTaskCount() {
     const inboxCount = document.querySelector('.inbox-count');
@@ -19,7 +17,6 @@ function updateTaskCount() {
     inboxCount.textContent = inboxTasks.taskCount;
     todayCount.textContent = todayTasks.taskCount;
     tomorrowCount.textContent = tomorrowTasks.taskCount;
-    // saveDefaultProjects();
 }
 
 export function setupInputListener() {
@@ -38,13 +35,13 @@ export function setupInputListener() {
 }
 
 function setupEventListeners() {
-    // // initialize list with inbox
+    // initialize list with inbox
     currentList = inboxTasks;
     listRenderer('Inbox');
     renderTasks(currentList.tasks);
     updateTaskCount();
 
-    // // buttons to load lists
+    // buttons to load lists
 
     const inboxButton = document.querySelector('.inbox');
     inboxButton.addEventListener('click', () => {
@@ -87,7 +84,6 @@ export function deleteEvent(task) {
     const infoBody = document.querySelector('.todo');
 
     currentList.deleteTask(task);
-    // renderTasks(currentList.tasks);
     updateTaskCount();
     saveProjects();
     infoBody.innerHTML = '';
