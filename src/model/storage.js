@@ -1,7 +1,5 @@
-import {createProject, defaultProjects, projects, todoItem, todoList} from './data';
-import {appendProject, projectOptions} from "../view/projects";
-import { listRenderer, renderTasks } from "../view/listRenderer";
-import { setCurrentList } from "../controller/events";
+import { createProject, defaultProjects, projects, todoItem, todoList } from './data';
+import { appendProject } from '../view/projects';
 
 export function saveProjects() {
     try {

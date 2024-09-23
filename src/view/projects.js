@@ -1,8 +1,8 @@
-import {createElement, renderPlaceholderImage} from '../utils/helpers';
-import {createProject, defaultProjects, projects} from '../model/data';
+import { createElement } from '../utils/helpers';
+import { createProject, projects } from '../model/data';
 import { deleteEvent, setCurrentList, updateTasks } from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
-import {loadProjects, saveDefaultProjects, saveProjects} from "../model/storage";
+import { saveProjects } from "../model/storage";
 
 export function appendTask(task) {
     const taskList = document.querySelector('.task-list');
@@ -95,6 +95,12 @@ export function appendProject(project) {
             updateProjectTaskCount();
         }
     };
+
+    projectContainer.addEventListener('click', () => {
+        listRenderer(project.name);
+        renderTasks(project.tasks);
+        setCurrentList(project);
+    });
 
     updateProjectTaskCount();
     projectOptions(project)

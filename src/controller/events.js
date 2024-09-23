@@ -1,8 +1,8 @@
 import { listRenderer, renderTasks } from '../view/listRenderer.js';
-import {defaultProjects, todoItem} from '../model/data.js';
+import { defaultProjects, todoItem } from '../model/data.js';
 import { appendTask, getProjectInput } from '../view/projects';
-import {getDefaultProjects, loadDefaultProjects, saveDefaultProjects, saveProjects} from "../model/storage";
-import {renderPlaceholderImage} from "../utils/helpers";
+import { getDefaultProjects, saveDefaultProjects, saveProjects } from '../model/storage';
+import { renderPlaceholderImage } from '../utils/helpers';
 
 const { inboxTasks, todayTasks, tomorrowTasks } = getDefaultProjects();
 defaultProjects.push(inboxTasks, todayTasks, tomorrowTasks);
@@ -48,7 +48,6 @@ function setupEventListeners() {
         currentList = inboxTasks;
         listRenderer('Inbox');
         renderTasks(currentList.tasks);
-        console.log(inboxTasks.tasks);
     });
 
     const todayButton = document.querySelector('.today');
@@ -56,7 +55,6 @@ function setupEventListeners() {
         currentList = todayTasks;
         listRenderer('Today');
         renderTasks(currentList.tasks);
-        console.log(todayTasks.tasks);
     });
 
     const tomorrowButton = document.querySelector('.tomorrow');
@@ -64,7 +62,6 @@ function setupEventListeners() {
         currentList = tomorrowTasks;
         listRenderer('Tomorrow');
         renderTasks(currentList.tasks);
-        console.log(tomorrowTasks.tasks);
     });
 
 

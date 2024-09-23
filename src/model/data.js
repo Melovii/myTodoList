@@ -1,4 +1,4 @@
-import {loadProjects, saveDefaultProjects, saveProjects} from "./storage";
+import { saveDefaultProjects, saveProjects } from './storage';
 
 export const defaultProjects = [];
 export const projects = [];
@@ -10,13 +10,13 @@ class todoList {
         this.taskCount = 0;
     }
 
-    createTask(title, dueDate, priority, description, checklistItems) {
-        const task = new todoItem(title, dueDate, priority, description, checklistItems);
-        task.checked = false;
-        this.tasks.push(task);
-        this.taskCount++;
-        return task;
-    }
+    // createTask(title, dueDate, priority, description, checklistItems) {
+    //     const task = new todoItem(title, dueDate, priority, description, checklistItems);
+    //     task.checked = false;
+    //     this.tasks.push(task);
+    //     this.taskCount++;
+    //     return task;
+    // }
 
     addTask(task) {
         this.tasks.push(task);
