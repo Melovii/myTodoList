@@ -46,6 +46,10 @@ export function renderTaskInfo(task) {
     titleContainer.appendChild(infoTitle);
     infoHeader.appendChild(titleContainer);
 
+    titleContainer.addEventListener('click', () => {
+        infoTitle.focus();
+    });
+
     const infoUtil = createElement('div', '', { class: 'info-util' });
 
     const containerDueDate = createElement('div', '', { class: 'date-container'} );
@@ -103,6 +107,14 @@ export function renderTaskInfo(task) {
             taskDescription.textContent = 'Enter task description here...';
             taskDescription.style.color = 'gray';
         }
+    });
+
+    infoTitle.addEventListener('blur', () => {
+        if (infoTitle.textContent.trim() === '') {
+            infoTitle.textContent = task.title || 'Untitled Task';
+        }
+        task.title = infoTitle.textContent.trim();
+        updateTasks();
     });
 
     // update the task when 'Enter' is pressed

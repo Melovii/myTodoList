@@ -1,5 +1,5 @@
 import { createElement } from '../utils/helpers';
-import { createProject } from '../model/data';
+import {createProject, projects} from '../model/data';
 import { deleteEvent, setCurrentList, updateTasks } from '../controller/events';
 import { listRenderer, renderTaskInfo, renderTasks } from './listRenderer';
 import {loadProjects, saveDefaultProjects, saveProjects} from "../model/storage";
@@ -25,8 +25,11 @@ export function appendTask(task) {
 
     divider.style.margin = '6px';
 
-    taskTitle.style.cursor = 'pointer';
-    taskTitle.addEventListener('click', () => renderTaskInfo(task));
+    taskContainer.style.cursor = 'pointer';
+    taskContainer.addEventListener('click', () => renderTaskInfo(task));
+
+    // taskTitle.style.cursor = 'pointer';
+    // taskTitle.addEventListener('click', () => renderTaskInfo(task));
 
     checkMark.addEventListener('click', () => {
         task.checked = !task.checked;
@@ -36,7 +39,23 @@ export function appendTask(task) {
         updateTasks();
     });
 
-    trashCan.addEventListener('click', () => deleteEvent(task));
+    trashCan.addEventListener('click', () => {
+        event.stopPropagation();
+        deleteEvent(task);
+        taskContainer.remove();
+        divider.remove();
+    });
+
+    // Add active class on click
+    taskContainer.addEventListener('click', () => {
+        // Remove the active class from all other tasks
+        document.querySelectorAll('.task-container').forEach((el) => {
+            el.classList.remove('active-task');
+        });
+
+        // Add active class to the clicked task
+        taskContainer.classList.add('active-task');
+    });
 
     trashContainer.appendChild(checkMark);
     trashContainer.appendChild(trashCan);
@@ -45,19 +64,18 @@ export function appendTask(task) {
     taskContainer.appendChild(trashContainer);
     taskList.appendChild(taskContainer);
     taskList.appendChild(divider);
+
+    setTimeout(() => {
+        taskContainer.classList.add('show');
+    }, 0);
 }
+
 
 export function appendProject(project) {
     const container = document.querySelector('.sidebar');
     const projectContainer = createElement('div', '', { class: 'projects sidebar-option' });
     const projectTitle = createElement('p', project.name, { class: `project-title ${project.name}` });
     const projectCount = createElement('p', project.getTaskCount(), { class: 'project-count' });
-
-    projectContainer.addEventListener('click', () => {
-        setCurrentList(project);
-        listRenderer(project.name);
-        renderTasks(project.tasks);
-    });
 
     projectContainer.appendChild(projectTitle);
     projectContainer.appendChild(projectCount);
@@ -82,8 +100,6 @@ export function appendProject(project) {
         }
     };
 
-    // saveProjects();
-    // saveDefaultProjects();
     updateProjectTaskCount();
     projectOptions(project)
 }
@@ -121,6 +137,11 @@ export function getProjectInput() {
                 addButton.style.visibility = 'visible';
                 inputBox.remove();
 
+                if (projects.length >= 8) {
+                    alert('Error: Maximum number of projects (8) reached.');
+                    return;
+                }
+
                 project = createProject(projectName);
                 if (project) {
                     appendProject(project);
@@ -144,6 +165,7 @@ export function getProjectInput() {
 
 export function projectOptions(project) {
     const projectTitle = document.querySelector(`.${project.name}`);
+    const projectContainer = projectTitle.parentElement;
     const projectTaskCount = projectTitle.nextElementSibling;
     const buttonContainer = createElement('div', '', { class: 'project-buttons' });
 
@@ -152,6 +174,7 @@ export function projectOptions(project) {
 
     const deleteButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     deleteButton.classList.add('trash-svg');
+    deleteButton.classList.add('delete-project');
     deleteButton.setAttribute('viewBox', '0 0 24 24');
 
     const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -169,9 +192,11 @@ export function projectOptions(project) {
 
     deleteButton.addEventListener('click', () => {
         project.deleteProject();
-        projectTaskCount.remove();
-        projectTitle.remove();
-        buttonContainer.remove();
+        // REMOVE THE DIV BRO LMFAOO
+        projectContainer.remove();
+        // projectTaskCount.remove();
+        // projectTitle.remove();
+        // buttonContainer.remove();
         saveProjects();
     });
 
@@ -186,4 +211,12 @@ export function projectOptions(project) {
 
     buttonContainer.appendChild(deleteButton);
     buttonContainer.appendChild(editButton);
+
+    projectTitle.parentElement.addEventListener('mouseover', () => {
+        buttonContainer.style.opacity = '1';
+    });
+
+    projectTitle.parentElement.addEventListener('mouseout', () => {
+        buttonContainer.style.opacity = '0';
+    });
 }

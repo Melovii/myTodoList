@@ -87,7 +87,7 @@ export function deleteEvent(task) {
     const infoBody = document.querySelector('.todo');
 
     currentList.deleteTask(task);
-    renderTasks(currentList.tasks);
+    // renderTasks(currentList.tasks);
     updateTaskCount();
     saveProjects();
     infoBody.innerHTML = '';
