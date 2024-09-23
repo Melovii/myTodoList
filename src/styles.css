@@ -210,6 +210,11 @@ nav {
     padding: 10px;
 }
 
+.task-container:hover {
+    background-color: rgba(48, 176, 199, 0.09);
+    transition: transform 0.2s ease-in-out;
+}
+
 .task-container,
 .task-list > .divider {
     opacity: 0;
