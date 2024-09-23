@@ -34,7 +34,7 @@ export function appendTask(task) {
         updateTasks();
     });
 
-    trashCan.addEventListener('click', () => {
+    trashCan.addEventListener('click', (event) => {
         event.stopPropagation();
         deleteEvent(task);
         taskContainer.remove();
@@ -161,16 +161,28 @@ export function getProjectInput() {
 }
 
 export function projectOptions(project) {
-    const projectTitle = document.querySelector(`.${project.name}`);
+    const projectTitles = document.querySelectorAll('.project-title');
+    let projectTitle;
+
+    projectTitles.forEach(title => {
+        if (title.textContent.trim() === project.name) {
+            projectTitle = title;
+        }
+    });
+
+    if (!projectTitle) {
+        console.error('Project title not found!');
+        return; // Exit if the title is not found
+    }
+
     const projectContainer = projectTitle.parentElement;
     const projectTaskCount = projectTitle.nextElementSibling;
     const buttonContainer = createElement('div', '', { class: 'project-buttons' });
 
-    projectTitle.parentElement.insertBefore(buttonContainer, projectTaskCount);
+    projectContainer.insertBefore(buttonContainer, projectTaskCount);
 
     const deleteButton = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    deleteButton.classList.add('trash-svg');
-    deleteButton.classList.add('delete-project');
+    deleteButton.classList.add('trash-svg', 'delete-project');
     deleteButton.setAttribute('viewBox', '0 0 24 24');
 
     const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -186,10 +198,11 @@ export function projectOptions(project) {
     deleteButton.appendChild(path1);
     editButton.appendChild(path2);
 
-    deleteButton.addEventListener('click', () => {
+    deleteButton.addEventListener('click', (event) => {
+        event.stopPropagation();
         project.deleteProject();
         projectContainer.remove();
-        // ! BUG TODO: render the placeholder image and render the inbox lists
+        // ! TODO: Render the placeholder image and inbox lists if needed
         saveProjects();
     });
 
@@ -205,11 +218,11 @@ export function projectOptions(project) {
     buttonContainer.appendChild(deleteButton);
     buttonContainer.appendChild(editButton);
 
-    projectTitle.parentElement.addEventListener('mouseover', () => {
+    projectContainer.addEventListener('mouseover', () => {
         buttonContainer.style.opacity = '1';
     });
 
-    projectTitle.parentElement.addEventListener('mouseout', () => {
+    projectContainer.addEventListener('mouseout', () => {
         buttonContainer.style.opacity = '0';
     });
 }
